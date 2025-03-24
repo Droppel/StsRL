@@ -25,4 +25,5 @@ class EpisodeEndCallback(BaseCallback):
             infos = self.locals.get("infos", {})[0]
             self.logger.record_mean("rollout/player_health", infos.get("player_health", 0))
             self.logger.record_mean("rollout/enemy_health", infos.get("enemy_health", 0))
+            self.logger.record_mean("rollout/turns", infos.get("turns", 0))
         return True
