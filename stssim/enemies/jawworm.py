@@ -2,16 +2,16 @@ from stssim.enemies.enemy import Enemy
 import numpy as np
 
 class JawWorm(Enemy):
-    # HP: 42-46
+    # HP: 40-44
     # Attacks:
-        # 1. Bellow: + 5 strength, block 9
+        # 1. Bellow: + 3 strength, block 6
         # 2. Trash: block 5, deal 7 damage
-        # 3. Chomp: deal 12 damage
+        # 3. Chomp: deal 11 damage
     # Always starts with Chomp
 
     def __init__(self):
         super().__init__()
-        self.health = np.random.randint(42, 47)
+        self.health = np.random.randint(40, 45)
         self.block = 0
         self.attack_counts = [0, 0, 0]
 
@@ -35,13 +35,13 @@ class JawWorm(Enemy):
 
     def do_turn(self, player):
         if self.intent == 0:
-            self.block += 9
-            self.strength += 5
+            self.block += 6
+            self.strength += 3
             return
         if self.intent == 1:
             self.block += 5
             player.damage(7 + self.strength)
             return
         if self.intent == 2:
-            player.damage(12 + self.strength)
+            player.damage(11 + self.strength)
             return
