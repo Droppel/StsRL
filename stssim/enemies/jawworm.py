@@ -40,8 +40,8 @@ class JawWorm(Enemy):
             return
         if self.intent == 1:
             self.block += 5
-            player.damage(7)
+            player.damage(7 + self.strength)
             return
         if self.intent == 2:
-            player.damage(12)
+            player.damage(12 + self.strength)
             return
