@@ -9,7 +9,10 @@ from stable_baselines3.common.logger import configure
 from episode_end_callback import EpisodeEndCallback
 
 render = False
-disable_wandb = True
+disable_wandb = False
+show = True
+if show:
+    disable_wandb = True
 experiment = "CurrentTurn"
 
 if not disable_wandb:
@@ -41,14 +44,15 @@ logger = configure(folder=f"experiments/{experiment}/", format_strings=["stdout"
 model.set_logger(logger)
 
 # Define and Train the agent
-obs, info = env.reset()
-while True:
-    action, states = model.predict(obs, deterministic=True)
-    env.combat.print()
-    print(action)
-    obs, rewards, terminated, truncated, info = env.step(action)
-    input()
-    if terminated:
-        obs, info = env.reset()
+if show:
+    obs, info = env.reset()
+    while True:
+        action, states = model.predict(obs, deterministic=True)
+        env.combat.print()
+        print(action)
+        obs, rewards, terminated, truncated, info = env.step(action)
+        input()
+        if terminated:
+            obs, info = env.reset()
 
 model.learn(total_timesteps=100000000, progress_bar=True, callback=callbacks)

@@ -13,8 +13,7 @@ class Combat():
     def __init__(self, enemy: Enemy):
         self.current_turn = 0
         
-        self.deck: typing.List[Card] = [Strike()] * 5 + [Defend()] * 5 + [Bash()] # 0: Strike, 1: Defend, 2: Bash
-        self.drawpile = self.deck.copy()
+        self.drawpile = range(12)
         self.hand = []
         self.discardpile = []
 
@@ -27,6 +26,15 @@ class Combat():
         self.winner = 0 # 0: None, 1: Player, 2: Enemy
 
         self.next_turn()
+    
+    def get_card_from_id(self, card_id: int) -> Card:
+        if card_id < 5:
+            return Strike()
+        if card_id < 10:
+            return Defend()
+        if card_id == 10:
+            return Bash()
+        return None
 
     def step(self, action):
         if action == 11:
@@ -37,7 +45,7 @@ class Combat():
         if deckstate[action] != 1: # Trying to play a card that is not in the hand
             return self.is_done(), False
         
-        card: Card = self.deck[action]
+        card: Card = self.get_card_from_id(action)
 
         if self.player.energy < card.cost: # Not enough energy to play the card
             return self.is_done(), False
@@ -51,11 +59,10 @@ class Combat():
     
     def get_deck_state(self):
         deckstate = np.zeros(11, dtype=np.int32)
-        for i, card in enumerate(self.deck):
-            if card in self.hand:
-                deckstate[i] = 1
-            elif card in self.discardpile:
-                deckstate[i] = 2
+        for card in self.hand:
+            deckstate[card] = 1
+        for card in self.discardpile:
+            deckstate[card] = 2
         return deckstate
         
     def is_done(self):
