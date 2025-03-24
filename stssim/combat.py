@@ -83,6 +83,9 @@ class Combat():
         # Tick buffs/debuffs
         if self.enemy.vulnerable > 0:
             self.enemy.vulnerable -= 1
+
+        self.enemy.strength += self.enemy.ritual
+
         self.player.energy = 3
         self.player.block = 0
         self.draw_cards(5)
