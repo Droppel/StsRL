@@ -9,11 +9,11 @@ from stable_baselines3.common.logger import configure
 from episode_end_callback import EpisodeEndCallback
 
 render = False
-disable_wandb = False
-show = True
+disable_wandb = True
+show = False
 if show:
     disable_wandb = True
-experiment = "CurrentTurn"
+experiment = "FixedDeck"
 
 if not disable_wandb:
     wandb.init(project="sts_rl", entity="s6cawisw-university-of-bonn", name=experiment, sync_tensorboard=True)
@@ -23,7 +23,8 @@ env = CombatEnv(render=render)
 check_env(env, warn=True)
 model = PPO("MultiInputPolicy", env)
 
-model = PPO.load(f"experiments/{experiment}/rl_model_320000_steps.zip", env=env)
+if show:
+    model = PPO.load(f"experiments/{experiment}/rl_model_320000_steps.zip", env=env)
 
 checkpoint_on_event = CheckpointCallback(save_freq=1, save_path=f"experiments/{experiment}/")
 # event_callback = EveryNTimesteps(n_steps=10000, callback=checkpoint_on_event)

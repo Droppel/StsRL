@@ -13,7 +13,7 @@ class Combat():
     def __init__(self, enemy: Enemy):
         self.current_turn = 0
         
-        self.drawpile = range(12)
+        self.drawpile = [i for i in range(11)]
         self.hand = []
         self.discardpile = []
 
@@ -50,8 +50,8 @@ class Combat():
         if self.player.energy < card.cost: # Not enough energy to play the card
             return self.is_done(), False
 
-        self.discardpile.append(card)
-        self.hand.remove(card)
+        self.discardpile.append(action)
+        self.hand.remove(action)
         card.play(self.player, self.enemy)
         self.player.energy -= card.cost
 
