@@ -10,7 +10,7 @@ from episode_end_callback import EpisodeEndCallback
 
 render = False
 disable_wandb = False
-experiment = "NewSimImplementation"
+experiment = "CurrentTurn"
 
 if not disable_wandb:
     wandb.init(project="sts_rl", entity="s6cawisw-university-of-bonn", name=experiment, sync_tensorboard=True)

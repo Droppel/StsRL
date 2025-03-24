@@ -70,6 +70,7 @@ class CombatEnv(gym.Env):
             info["player_health"] = self.combat.player.health
             info["enemy_health"] = self.combat.enemy.health
             info["is_success"] = self.combat.winner == 1
+            info["turns"] = self.combat.current_turn
 
         self.current_step += 1
         if self.dorender:
