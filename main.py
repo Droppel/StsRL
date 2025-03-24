@@ -9,7 +9,7 @@ from stable_baselines3.common.logger import configure
 from episode_end_callback import EpisodeEndCallback
 
 render = False
-disable_wandb = True
+disable_wandb = False
 show = False
 if show:
     disable_wandb = True

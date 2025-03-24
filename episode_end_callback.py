@@ -23,7 +23,8 @@ class EpisodeEndCallback(BaseCallback):
         # if self.locals.get("done", False):
         if self.locals.get("dones", [False])[0]:
             infos = self.locals.get("infos", {})[0]
-            self.logger.record_mean("rollout/player_health", infos.get("player_health", 0))
-            self.logger.record_mean("rollout/enemy_health", infos.get("enemy_health", 0))
-            self.logger.record_mean("rollout/turns", infos.get("turns", 0))
+            self.logger.record_mean("game/player_health", infos.get("player_health", 0))
+            self.logger.record_mean("game/enemy_health", infos.get("enemy_health", 0))
+            self.logger.record_mean("game/turns", infos.get("turns", 0))
+            self.logger.record_mean("game/misses", infos.get("misses", 0))
         return True

@@ -29,7 +29,7 @@ class JawWorm(Enemy):
             selected_intent = 0 if np.random.randint(75) < 45 else 1
         else:
             selected_intent = np.random.choice([0, 1, 2], p=[0.45, 0.30, 0.25])
-        self.attack_counts = [0 if i != selected_intent else self.attack_counts[i] for i in range(len(self.attack_counts))]
+        self.attack_counts = [0 if i != selected_intent else self.attack_counts[i] + 1 for i in range(len(self.attack_counts))]
         self.intent = selected_intent
         return
 

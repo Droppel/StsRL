@@ -34,6 +34,8 @@ class CombatEnv(gym.Env):
 
         self.current_step = 0
         self.current_episode = 0
+
+        self.misses = 0
         self.dorender = render
 
         self.reset()
@@ -59,6 +61,7 @@ class CombatEnv(gym.Env):
         #     reward = self.combat.player.health - self.combat.enemy.health
 
         if not valid:
+            self.misses += 1
             reward = -10
 
         terminated = done
@@ -71,6 +74,7 @@ class CombatEnv(gym.Env):
             info["enemy_health"] = self.combat.enemy.health
             info["is_success"] = self.combat.winner == 1
             info["turns"] = self.combat.current_turn
+            info["misses"] = self.misses
 
         self.current_step += 1
         if self.dorender:
@@ -98,6 +102,7 @@ class CombatEnv(gym.Env):
     def reset(self, seed=None, options=None):
         self.current_step = 0
         self.current_episode += 1
+        self.misses = 0
 
         # observation = np.array(self.tetris.board)
 
